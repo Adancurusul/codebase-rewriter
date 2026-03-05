@@ -446,3 +446,11 @@ The roadmap uses dev-workflow's exact format:
 | Roadmap Tasks | [references/output/55-roadmap-tasks.md](references/output/55-roadmap-tasks.md) |
 | Risk Assessment | [references/output/56-risk-assessment.md](references/output/56-risk-assessment.md) |
 | Feasibility Report | [references/output/57-feasibility-report.md](references/output/57-feasibility-report.md) |
+
+### Scaffold (Phase 4, optional)
+
+| Task | Guide |
+|------|-------|
+| Cargo Workspace | [references/scaffold/60-cargo-workspace.md](references/scaffold/60-cargo-workspace.md) |
+| Module Skeletons | [references/scaffold/61-module-skeletons.md](references/scaffold/61-module-skeletons.md) |
+| CI Configuration | [references/scaffold/62-ci-configuration.md](references/scaffold/62-ci-configuration.md) |
