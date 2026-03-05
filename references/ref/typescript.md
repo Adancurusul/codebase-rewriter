@@ -67,6 +67,21 @@
 | `#[serde(default)]` on `Vec` | Defaults to empty if missing from JSON | |
 | `#[serde(default = "fn")]` | Custom default when field missing | |
 
+## Error Handling Patterns
+
+| TypeScript | Rust | Notes |
+|---|---|---|
+| `try { } catch (e) { }` | `match result { Ok(v) => ..., Err(e) => ... }` | Or `?` operator |
+| `throw new Error("msg")` | `return Err(AppError::Msg("msg".into()))` | Typed error enum |
+| `class AppError extends Error` | `#[derive(thiserror::Error)] enum AppError` | thiserror derive |
+| `class NotFoundError extends AppError` | `AppError::NotFound` variant | Flatten hierarchy |
+| `Promise.reject(err)` | `Err(err)` in async fn | Same Result<T, E> |
+| `catch (e) { if (e instanceof X) }` | `match err { AppError::X(e) => ... }` | Pattern matching |
+| `express error middleware` | `axum IntoResponse for AppError` | Tower error handling |
+| `throw` in constructor | `fn new() -> Result<Self, Error>` | Fallible construction |
+| `Error.cause` (chaining) | `.source()` or `#[from]` | thiserror `#[source]` |
+| `AggregateError` | `Vec<Error>` or multi-variant enum | |
+
 ## Class -> Struct Patterns
 
 | TypeScript | Rust | When |

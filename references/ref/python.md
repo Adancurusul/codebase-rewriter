@@ -86,6 +86,20 @@
 | `x is not None and pred(x)` | `x.is_some_and(\|v\| pred(v))` |
 | `(x, y) if both not None` | `x.zip(y)` -> `Option<(T, U)>` |
 
+## Error Handling Patterns
+
+| Python | Rust | Notes |
+|--------|------|-------|
+| `try: ... except: ...` | `match result { Ok(v) => ..., Err(e) => ... }` | Or `?` operator |
+| `raise ValueError("msg")` | `return Err(AppError::Validation("msg".into()))` | Typed enum |
+| `class AppError(Exception)` | `#[derive(thiserror::Error)] enum AppError` | thiserror |
+| `except (TypeError, ValueError)` | `Err(AppError::Type(_) \| AppError::Value(_))` | Multi-match |
+| `raise ... from cause` | `#[source] inner: OtherError` | thiserror `#[from]` |
+| `try: ... finally: ...` | RAII / `Drop` impl | Automatic cleanup |
+| `with open(f) as fp:` | `let fp = File::open(f)?;` + Drop | RAII |
+| `except Exception as e: log(e); raise` | `.map_err(\|e\| { log(&e); e })?` | Log and propagate |
+| `sys.exit(1)` | `std::process::exit(1)` or `Result` from main | Prefer Result |
+
 ## Class -> Struct Patterns
 
 ### Dunder -> Trait Mapping

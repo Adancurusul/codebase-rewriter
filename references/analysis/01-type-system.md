@@ -11,7 +11,8 @@ Catalog every type definition in the source codebase.
    - Python: `class\s+\w+`, `@dataclass`, `TypedDict`, `NamedTuple`
    - Go: `type\s+\w+\s+struct`, `type\s+\w+\s+interface`
 2. For EACH type found: read its definition, count references, note dependencies on other types
-3. Rate migration complexity: Low (direct mapping) / Medium (needs redesign) / High (no equivalent)
+3. Identify special patterns: discriminated unions, self-referential types, circular references, generic types with complex bounds
+4. Rate migration complexity: Low (direct mapping) / Medium (needs redesign) / High (no equivalent)
 
 ## Template
 
@@ -36,6 +37,16 @@ Total types: {N} | Low: {N} | Medium: {N} | High: {N}
 \`\`\`
 
 {repeat for EVERY type}
+
+## Special Patterns
+
+| Category | Type | Details |
+|----------|------|---------|
+| Discriminated union | {TypeName} | Discriminant: {field name} |
+| Self-referential | {TypeName} | {field}: {TypeName}[] |
+| Circular reference | {TypeA} <-> {TypeB} | {A.field} -> {B.field} -> {A} |
+| Generic (complex) | {TypeName}<T> | T extends/bound: {constraint} |
+{EVERY special pattern}
 
 ## Dependency Order
 
