@@ -101,7 +101,7 @@ Detect source language, scan directory tree, check for existing codebase-explore
 ### Phase 1: Source Analysis (2-3 Agents, parallel)
 Deep analysis of types, errors, async patterns, dependencies, architecture, and testing.
 
-### Phase 2: Rust Mapping (2-4 Agents, parallel)
+### Phase 2: Rust Mapping (2-3 Agents, parallel)
 Concrete mappings for every type, dependency, error pattern, and async construct.
 
 ### Phase 3: Synthesis (Main Agent)
@@ -112,17 +112,17 @@ Generate Cargo workspace, module skeletons, and CI configuration.
 
 ## Reference Guides
 
-The skill includes 35 reference guides:
+The skill includes 18 files organized by role:
 
-| Category | Count | Guides |
-|----------|-------|--------|
-| Source Analysis | 7 | Source inventory, types, errors, async, deps, architecture, testing |
-| Common Mapping | 6 | Ownership, errors, async, generics, testing, crate recommendations |
-| TypeScript -> Rust | 6 | Types, null/Option, classes, Promise/Future, npm->crates, patterns |
-| Python -> Rust | 6 | Types, None/Option, classes, asyncio->tokio, pip->crates, patterns |
-| Go -> Rust | 6 | Types, error->Result, goroutine->tokio, interfaces, go mod->crates, patterns |
-| Output Templates | 8 | Migration plan, module/dep/type mapping, errors, roadmap, risk, feasibility |
-| Scaffold | 3 | Cargo workspace, module skeletons, CI configuration |
+| Category | Count | Purpose |
+|----------|-------|---------|
+| Analysis method guides | 7 | Source analysis tasks (~60 lines each) |
+| Mapping method guides | 6 | Rust mapping tasks (~70 lines each) |
+| Language reference tables | 3 | Lookup tables for TS/Python/Go (~300 lines each) |
+| Output templates | 1 | All synthesis document formats |
+| Scaffold guide | 1 | Cargo workspace + CI generation |
+
+Method guides tell agents **what to do and what format to output**. Reference tables provide **lookup data** (type equivalents, crate mappings). Agents load 2-3 method guides + 1 ref table per phase, keeping context under 500 lines.
 
 ## Installation
 

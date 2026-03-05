@@ -35,9 +35,7 @@ Generate ultra-detailed migration plans for rewriting codebases from TypeScript/
 ### Skip Rules
 
 Mark a task `[-] N/A` when:
-- **TypeScript guides (20-25)**: Project is not TypeScript/JavaScript
-- **Python guides (30-35)**: Project is not Python
-- **Go guides (40-45)**: Project is not Go
+- **Language ref not needed**: Only load `ref/{language}.md` for the detected source language
 - **Quick Mode**: Large repos skip detailed type/dependency mapping, produce summary-level plan only
 
 ## Output Structure
@@ -95,57 +93,54 @@ Phase 1 tasks analyze different aspects of source code independently. Phase 2 ma
 
 Spawn `general-purpose` agents **in a single response**:
 
-| Agent | Tasks | Focus |
-|-------|-------|-------|
-| Analyzer-A | Source inventory + Type system + Architecture | Structure and types (guides 00, 01, 05) |
-| Analyzer-B | Error handling + Async model + Dependencies | Behavior patterns (guides 02, 03, 04) |
-| Analyzer-C | Testing + Build system | Quality infrastructure (guide 06) |
+| Agent | Tasks | Guides |
+|-------|-------|--------|
+| Analyzer-A | Source inventory + Type system + Architecture | 00, 01, 05 (~180 lines) |
+| Analyzer-B | Error handling + Async model + Dependencies + Testing | 02, 03, 04, 06 (~240 lines) |
 
 If `.codebase-analysis/` exists, Analyzer-A reads existing analysis and focuses only on migration-specific additions (type cataloging for migration, not general documentation).
 
 Each agent writes to `.migration-plan/analysis/`.
 
-#### Phase 2: Rust Mapping (2-4 Agents, parallel)
+#### Phase 2: Rust Mapping (2-3 Agents, parallel)
 
 After Phase 1 completes, spawn mapping agents:
 
-| Agent | Tasks | Focus |
-|-------|-------|-------|
-| Mapper-A | Module mapping + Type mapping | Structure conversion (guides 10, 13, language 20-22/30-32/40-43) |
-| Mapper-B | Dependency mapping + Async strategy | Ecosystem mapping (guides 12, 15, language 23-24/33-34/42-44) |
-| Mapper-C | Error hierarchy + Pattern transforms | Behavior conversion (guides 11, language 25/35/45) |
-| Mapper-D | (multi-language only) Additional language mappings | Extra language (if mixed project) |
+| Agent | Tasks | Guides | Ref Table |
+|-------|-------|--------|-----------|
+| Mapper-A | Type mapping + Module mapping + Pattern transforms | 10, 14, 15 (~240 lines) | ref/{lang}.md (Type + Pattern sections) |
+| Mapper-B | Error hierarchy + Async strategy + Dependency mapping | 11, 12, 13 (~220 lines) | ref/{lang}.md (Error + Async + Crate sections) |
+| Mapper-C | (multi-language only) Second language mappings | 10-15 | ref/{lang2}.md |
 
 Each mapping agent:
-1. Reads the relevant reference guide(s)
-2. Reads the Phase 1 analysis output for its area
-3. Produces CONCRETE mappings with Rust code examples
-4. Writes to `.migration-plan/mappings/`
+1. Reads 2-3 method guides (~60-80 lines each)
+2. Reads relevant sections from `ref/{language}.md` (lookup tables)
+3. Reads the Phase 1 analysis output for its area
+4. Produces CONCRETE mappings with Rust code examples
+5. Writes to `.migration-plan/mappings/`
 
 **Critical rule**: Enumerate EVERY item. Do not summarize. If there are 47 interfaces, list all 47 with their Rust equivalents. If there are 23 npm packages, map all 23 to crate equivalents.
-
-Each agent writes to `.migration-plan/mappings/`.
 
 #### Phase 3: Synthesis (Main Agent, serial)
 
 After ALL Phase 2 agents complete:
 1. Read all analysis and mapping files
-2. Generate `migration-plan.md` (executive summary)
-3. Generate `feasibility-report.md` (should you rewrite?)
-4. Generate `risk-assessment.md`
-5. Generate `dev-workflow/` directory:
+2. Read `references/output/templates.md` for output format specs
+3. Generate `migration-plan.md` (executive summary)
+4. Generate `feasibility-report.md` (should you rewrite?)
+5. Generate `risk-assessment.md`
+6. Generate `dev-workflow/` directory:
    - `requirements.md` (each module migration = one requirement)
    - `solution.md` (migration architecture)
    - `roadmap.md` (step-by-step tasks in dev-workflow format)
-6. Final update to `plan.md`
+7. Final update to `plan.md`
 
 #### Phase 4: Scaffold (Optional, on request)
 
 Only when user explicitly asks for scaffold generation:
-1. Read `mappings/module-mapping.md`
-2. Generate Cargo workspace `Cargo.toml`
-3. Create module directories with type definition skeletons
-4. Set up basic CI configuration
+1. Read `references/scaffold/scaffold.md`
+2. Read `mappings/module-mapping.md`, `type-mapping.md`, `dependency-mapping.md`, `error-hierarchy.md`
+3. Generate Cargo workspace, module skeletons, error types, CI config
 
 ### Agent Prompt Template
 
@@ -169,9 +164,10 @@ Your job is to explore the source code and produce DETAILED migration documents.
 ## Your Tasks
 
 ### Task: {task_name}
-1. Read the reference guide: {skill_dir}/references/{guide_path}
-2. Follow the guide's Method section to explore the codebase
-3. Write output to: {output_path}
+1. Read the method guide: {skill_dir}/references/{guide_path}
+2. (Phase 2 only) Read lookup tables: {skill_dir}/references/ref/{language}.md
+3. Follow the guide's Method section to explore the codebase
+4. Write output to: {output_path}
 
 (repeat for each assigned task)
 
@@ -191,12 +187,12 @@ Your job is to explore the source code and produce DETAILED migration documents.
 
 Use Serial Mode when Agent tool is unavailable:
 
-| Batch | Tasks | Focus |
-|-------|-------|-------|
-| 1 | Phase 0 + Analysis (00-03) | Foundation + Structure + Types + Errors |
-| 2 | Analysis (04-06) + Mapping (module, type) | Dependencies + Architecture + Core mapping |
-| 3 | Mapping (deps, error, async, patterns) | Ecosystem + Behavior mapping |
-| 4 | Synthesis (all output docs) | Migration plan + Feasibility + Roadmap |
+| Batch | Tasks | Guides |
+|-------|-------|--------|
+| 1 | Phase 0 + Analysis (00-03) | Foundation + guides 00, 01, 02, 03 |
+| 2 | Analysis (04-06) + Mapping (10, 14) | Guides 04, 05, 06, 10, 14 + ref/{lang}.md |
+| 3 | Mapping (11, 12, 13, 15) | Guides 11, 12, 13, 15 + ref/{lang}.md |
+| 4 | Synthesis | output/templates.md + all prior outputs |
 
 After each batch: update plan.md, prompt `/compact`, resume from next pending.
 
@@ -374,83 +370,53 @@ The roadmap uses dev-workflow's exact format:
   - Dependencies: #M, #K
 ```
 
-## Analysis Guides
+## Reference Guides
 
-**Load ONLY the guide for the current task**:
+**Load ONLY the guide(s) for the current task.** Each guide is ~60-80 lines.
 
-### Source Analysis (Phase 1)
+### Method Guides (Phase 1: Analysis)
 
-| Task | Guide |
-|------|-------|
-| A0. Source Inventory | [references/analysis/00-source-inventory.md](references/analysis/00-source-inventory.md) |
-| A1. Type System | [references/analysis/01-type-system.md](references/analysis/01-type-system.md) |
-| A2. Error Handling | [references/analysis/02-error-handling.md](references/analysis/02-error-handling.md) |
-| A3. Async/Concurrency | [references/analysis/03-async-concurrency.md](references/analysis/03-async-concurrency.md) |
-| A4. Dependencies | [references/analysis/04-dependency-graph.md](references/analysis/04-dependency-graph.md) |
-| A5. Architecture | [references/analysis/05-architecture.md](references/analysis/05-architecture.md) |
-| A6. Testing & Build | [references/analysis/06-testing-build.md](references/analysis/06-testing-build.md) |
+| Task | Guide | ~Lines |
+|------|-------|--------|
+| A0. Source Inventory | [references/analysis/00-source-inventory.md](references/analysis/00-source-inventory.md) | 45 |
+| A1. Type System | [references/analysis/01-type-system.md](references/analysis/01-type-system.md) | 60 |
+| A2. Error Handling | [references/analysis/02-error-handling.md](references/analysis/02-error-handling.md) | 60 |
+| A3. Async/Concurrency | [references/analysis/03-async-concurrency.md](references/analysis/03-async-concurrency.md) | 60 |
+| A4. Dependencies | [references/analysis/04-dependency-graph.md](references/analysis/04-dependency-graph.md) | 60 |
+| A5. Architecture | [references/analysis/05-architecture.md](references/analysis/05-architecture.md) | 55 |
+| A6. Testing & Build | [references/analysis/06-testing-build.md](references/analysis/06-testing-build.md) | 55 |
 
-### Common Mapping (Phase 2)
+### Method Guides (Phase 2: Mapping)
 
-| Task | Guide |
-|------|-------|
-| Ownership Model | [references/mapping/common/10-ownership-model.md](references/mapping/common/10-ownership-model.md) |
-| Error Strategy | [references/mapping/common/11-error-strategy.md](references/mapping/common/11-error-strategy.md) |
-| Async Transform | [references/mapping/common/12-async-transform.md](references/mapping/common/12-async-transform.md) |
-| Generics & Traits | [references/mapping/common/13-generics-traits.md](references/mapping/common/13-generics-traits.md) |
-| Testing Patterns | [references/mapping/common/14-testing-patterns.md](references/mapping/common/14-testing-patterns.md) |
-| Crate Recommendations | [references/mapping/common/15-crate-recommendations.md](references/mapping/common/15-crate-recommendations.md) |
+| Task | Guide | ~Lines |
+|------|-------|--------|
+| M1. Type Mapping | [references/mapping/10-type-mapping.md](references/mapping/10-type-mapping.md) | 85 |
+| M3. Error Hierarchy | [references/mapping/11-error-mapping.md](references/mapping/11-error-mapping.md) | 75 |
+| M4. Async Strategy | [references/mapping/12-async-mapping.md](references/mapping/12-async-mapping.md) | 70 |
+| M2. Dependency Mapping | [references/mapping/13-dependency-mapping.md](references/mapping/13-dependency-mapping.md) | 70 |
+| M0. Module Mapping | [references/mapping/14-module-mapping.md](references/mapping/14-module-mapping.md) | 75 |
+| M5. Pattern Transforms | [references/mapping/15-pattern-mapping.md](references/mapping/15-pattern-mapping.md) | 65 |
 
-### TypeScript -> Rust (Phase 2, if applicable)
+### Language Reference Tables (Phase 2: lookup on demand)
 
-| Task | Guide |
-|------|-------|
-| Types | [references/mapping/typescript/20-ts-types-to-rust.md](references/mapping/typescript/20-ts-types-to-rust.md) |
-| Null/Option | [references/mapping/typescript/21-ts-null-to-option.md](references/mapping/typescript/21-ts-null-to-option.md) |
-| Classes | [references/mapping/typescript/22-ts-class-to-rust.md](references/mapping/typescript/22-ts-class-to-rust.md) |
-| Promises/Futures | [references/mapping/typescript/23-ts-promise-to-future.md](references/mapping/typescript/23-ts-promise-to-future.md) |
-| npm -> crates | [references/mapping/typescript/24-ts-npm-to-crates.md](references/mapping/typescript/24-ts-npm-to-crates.md) |
-| TS Patterns | [references/mapping/typescript/25-ts-patterns.md](references/mapping/typescript/25-ts-patterns.md) |
-
-### Python -> Rust (Phase 2, if applicable)
-
-| Task | Guide |
-|------|-------|
-| Types | [references/mapping/python/30-py-types-to-rust.md](references/mapping/python/30-py-types-to-rust.md) |
-| None/Option | [references/mapping/python/31-py-none-to-option.md](references/mapping/python/31-py-none-to-option.md) |
-| Classes | [references/mapping/python/32-py-class-to-rust.md](references/mapping/python/32-py-class-to-rust.md) |
-| Async | [references/mapping/python/33-py-async-to-tokio.md](references/mapping/python/33-py-async-to-tokio.md) |
-| pip -> crates | [references/mapping/python/34-py-pip-to-crates.md](references/mapping/python/34-py-pip-to-crates.md) |
-| Python Patterns | [references/mapping/python/35-py-patterns.md](references/mapping/python/35-py-patterns.md) |
-
-### Go -> Rust (Phase 2, if applicable)
-
-| Task | Guide |
-|------|-------|
-| Types | [references/mapping/go/40-go-types-to-rust.md](references/mapping/go/40-go-types-to-rust.md) |
-| Errors | [references/mapping/go/41-go-error-to-result.md](references/mapping/go/41-go-error-to-result.md) |
-| Goroutines | [references/mapping/go/42-go-goroutine-to-tokio.md](references/mapping/go/42-go-goroutine-to-tokio.md) |
-| Interfaces | [references/mapping/go/43-go-interface-to-trait.md](references/mapping/go/43-go-interface-to-trait.md) |
-| go mod -> crates | [references/mapping/go/44-go-mod-to-crates.md](references/mapping/go/44-go-mod-to-crates.md) |
-| Go Patterns | [references/mapping/go/45-go-patterns.md](references/mapping/go/45-go-patterns.md) |
+| Language | Reference | ~Lines | Sections |
+|----------|-----------|--------|----------|
+| TypeScript | [references/ref/typescript.md](references/ref/typescript.md) | 324 | Types, NPM->Crate, Patterns |
+| Python | [references/ref/python.md](references/ref/python.md) | 277 | Types, pip->Crate, Patterns |
+| Go | [references/ref/go.md](references/ref/go.md) | 278 | Types, Module->Crate, Patterns |
 
 ### Output Templates (Phase 3)
 
 | Document | Template |
 |----------|----------|
-| Migration Plan | [references/output/50-migration-plan.md](references/output/50-migration-plan.md) |
-| Module Mapping | [references/output/51-module-mapping.md](references/output/51-module-mapping.md) |
-| Dependency Mapping | [references/output/52-dependency-mapping.md](references/output/52-dependency-mapping.md) |
-| Type Mapping | [references/output/53-type-mapping.md](references/output/53-type-mapping.md) |
-| Error Strategy | [references/output/54-error-strategy.md](references/output/54-error-strategy.md) |
-| Roadmap Tasks | [references/output/55-roadmap-tasks.md](references/output/55-roadmap-tasks.md) |
-| Risk Assessment | [references/output/56-risk-assessment.md](references/output/56-risk-assessment.md) |
-| Feasibility Report | [references/output/57-feasibility-report.md](references/output/57-feasibility-report.md) |
+| All synthesis docs | [references/output/templates.md](references/output/templates.md) |
+
+Templates cover: migration-plan.md, feasibility-report.md, risk-assessment.md, dev-workflow/roadmap.md, dev-workflow/requirements.md, dev-workflow/solution.md.
 
 ### Scaffold (Phase 4, optional)
 
 | Task | Guide |
 |------|-------|
-| Cargo Workspace | [references/scaffold/60-cargo-workspace.md](references/scaffold/60-cargo-workspace.md) |
-| Module Skeletons | [references/scaffold/61-module-skeletons.md](references/scaffold/61-module-skeletons.md) |
-| CI Configuration | [references/scaffold/62-ci-configuration.md](references/scaffold/62-ci-configuration.md) |
+| Full scaffold | [references/scaffold/scaffold.md](references/scaffold/scaffold.md) |
+
+Covers: Cargo workspace, module skeletons, error types, CI config, supporting files.

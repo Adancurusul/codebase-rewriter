@@ -297,7 +297,7 @@ pub enum UserRole {
 
 If your project uses multiple languages, codebase-rewriter:
 1. Detects all languages present
-2. Analyzes each language with its specific guides
+2. Loads the appropriate `ref/{language}.md` lookup tables for each
 3. Produces unified migration plan with cross-language dependencies
 4. Suggests migration order considering inter-service boundaries
 
