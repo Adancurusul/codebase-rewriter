@@ -1,6 +1,6 @@
 # 22 - TypeScript Class Hierarchy to Rust Composition + Traits
 
-**Output**: `.migration-plan/mappings/class-hierarchy-mapping.md`
+**Output**: Contributes to `.migration-plan/mappings/type-mapping.md` (class/struct section)
 
 ## Purpose
 

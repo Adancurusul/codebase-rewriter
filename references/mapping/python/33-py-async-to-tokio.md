@@ -1,6 +1,6 @@
 # 33 - Python asyncio to Rust Tokio Mapping
 
-**Output**: `.migration-plan/mappings/async-mapping.md`
+**Output**: Contributes to `.migration-plan/mappings/async-strategy.md`
 
 ## Purpose
 

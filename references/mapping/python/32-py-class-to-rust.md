@@ -1,6 +1,6 @@
 # 32 - Python Class Hierarchy to Rust Composition + Traits
 
-**Output**: `.migration-plan/mappings/class-hierarchy.md`
+**Output**: Contributes to `.migration-plan/mappings/type-mapping.md` (class/struct section)
 
 ## Purpose
 

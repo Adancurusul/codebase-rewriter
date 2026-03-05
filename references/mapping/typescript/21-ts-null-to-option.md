@@ -1,6 +1,6 @@
 # 21 - TypeScript Null/Undefined to Rust Option/Result Mapping
 
-**Output**: `.migration-plan/mappings/nullability-mapping.md`
+**Output**: Contributes to `.migration-plan/mappings/type-mapping.md` (null/Option section)
 
 ## Purpose
 

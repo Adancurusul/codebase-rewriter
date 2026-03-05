@@ -1,6 +1,6 @@
 # 35 - Python-Specific Pattern Conversions
 
-**Output**: `.migration-plan/mappings/pattern-transforms.md` (Python patterns section)
+**Output**: Contributes to `.migration-plan/mappings/pattern-transforms.md`
 
 ## Purpose
 

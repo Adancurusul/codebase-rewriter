@@ -1,6 +1,6 @@
 # 23 - TypeScript Promise/Async to Rust Future/Tokio Mapping
 
-**Output**: `.migration-plan/mappings/async-mapping.md`
+**Output**: Contributes to `.migration-plan/mappings/async-strategy.md`
 
 ## Purpose
 

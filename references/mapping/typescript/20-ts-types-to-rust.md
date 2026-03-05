@@ -1,6 +1,6 @@
 # 20 - TypeScript Types to Rust Types Mapping
 
-**Output**: `.migration-plan/mappings/type-system-mapping.md`
+**Output**: Contributes to `.migration-plan/mappings/type-mapping.md`
 
 ## Purpose
 

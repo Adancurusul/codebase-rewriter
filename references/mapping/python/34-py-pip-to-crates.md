@@ -1,6 +1,6 @@
 # 34 - pip/PyPI Package to Rust Crate Mapping
 
-**Output**: `.migration-plan/mappings/dependency-mapping.md` (Python-specific section)
+**Output**: Contributes to `.migration-plan/mappings/dependency-mapping.md`
 
 ## Purpose
 

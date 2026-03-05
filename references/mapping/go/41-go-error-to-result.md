@@ -1,6 +1,6 @@
 # 41 - Go Error Handling to Rust Result/Option
 
-**Output**: `.migration-plan/mappings/go-error-to-result.md`
+**Output**: Contributes to `.migration-plan/mappings/error-hierarchy.md`
 
 ## Purpose
 

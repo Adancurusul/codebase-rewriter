@@ -1,6 +1,6 @@
 # 11 - Error Strategy Mapping
 
-**Output**: `.migration-plan/mappings/error-hierarchy.md`
+**Output**: Contributes to `.migration-plan/mappings/error-hierarchy.md`
 
 ## Purpose
 

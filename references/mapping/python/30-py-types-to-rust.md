@@ -1,6 +1,6 @@
 # 30 - Python Type Hints to Rust Type Mapping
 
-**Output**: `.migration-plan/mappings/type-mapping.md`
+**Output**: Contributes to `.migration-plan/mappings/type-mapping.md`
 
 ## Purpose
 

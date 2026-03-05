@@ -1,6 +1,6 @@
 # 31 - Python None/Optional to Rust Option/Result Mapping
 
-**Output**: `.migration-plan/mappings/none-handling.md`
+**Output**: Contributes to `.migration-plan/mappings/type-mapping.md` (None/Option section)
 
 ## Purpose
 

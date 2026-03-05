@@ -1,6 +1,6 @@
 # 62 - CI Configuration
 
-**Output**: CI/CD configuration files for the new Rust project
+**Output**: `{project_root}/.github/workflows/ci.yml`, `{project_root}/Dockerfile`
 
 ## Purpose
 

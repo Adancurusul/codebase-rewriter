@@ -1,6 +1,6 @@
 # 15 - Crate Recommendations
 
-**Output**: `.migration-plan/mappings/dependency-mapping.md` (crate selection section)
+**Output**: Contributes to `.migration-plan/mappings/dependency-mapping.md` (crate selection section)
 
 ## Purpose
 

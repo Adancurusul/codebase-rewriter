@@ -1,6 +1,6 @@
 # 44 - Go Module/Stdlib to Rust Crate Mapping
 
-**Output**: `.migration-plan/mappings/go-mod-to-crates.md`
+**Output**: Contributes to `.migration-plan/mappings/dependency-mapping.md`
 
 ## Purpose
 

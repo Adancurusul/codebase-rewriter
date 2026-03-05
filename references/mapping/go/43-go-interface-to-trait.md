@@ -1,6 +1,6 @@
 # 43 - Go Interface to Rust Trait
 
-**Output**: `.migration-plan/mappings/go-interface-to-trait.md`
+**Output**: Contributes to `.migration-plan/mappings/type-mapping.md` (interface/trait section)
 
 ## Purpose
 

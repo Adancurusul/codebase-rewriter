@@ -1,6 +1,6 @@
 # 24 - NPM Package to Rust Crate Mapping Reference
 
-**Output**: `.migration-plan/mappings/npm-to-crates.md`
+**Output**: Contributes to `.migration-plan/mappings/dependency-mapping.md`
 
 ## Purpose
 

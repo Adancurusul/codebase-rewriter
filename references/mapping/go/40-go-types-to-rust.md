@@ -1,6 +1,6 @@
 # 40 - Go Types to Rust Types
 
-**Output**: `.migration-plan/mappings/go-types-to-rust.md`
+**Output**: Contributes to `.migration-plan/mappings/type-mapping.md`
 
 ## Purpose
 

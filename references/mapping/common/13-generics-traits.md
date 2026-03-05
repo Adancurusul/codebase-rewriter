@@ -1,6 +1,6 @@
 # 13 - Generics and Traits Mapping
 
-**Output**: `.migration-plan/mappings/pattern-transforms.md` (generics/traits section)
+**Output**: Contributes to `.migration-plan/mappings/pattern-transforms.md` (generics/traits section)
 
 ## Purpose
 

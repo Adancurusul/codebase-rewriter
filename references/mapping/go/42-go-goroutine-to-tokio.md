@@ -1,6 +1,6 @@
 # 42 - Go Goroutine/Channel to Tokio
 
-**Output**: `.migration-plan/mappings/go-goroutine-to-tokio.md`
+**Output**: Contributes to `.migration-plan/mappings/async-strategy.md`
 
 ## Purpose
 

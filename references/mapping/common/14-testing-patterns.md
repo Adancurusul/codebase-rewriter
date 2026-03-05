@@ -1,6 +1,6 @@
 # 14 - Testing Patterns Mapping
 
-**Output**: `.migration-plan/mappings/testing-strategy.md`
+**Output**: Contributes to `.migration-plan/mappings/pattern-transforms.md` (testing section)
 
 ## Purpose
 

@@ -1,6 +1,6 @@
 # 45 - Go-Specific Pattern Conversions
 
-**Output**: `.migration-plan/mappings/go-patterns.md`
+**Output**: Contributes to `.migration-plan/mappings/pattern-transforms.md`
 
 ## Purpose
 

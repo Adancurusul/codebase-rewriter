@@ -1,6 +1,6 @@
 # 25 - TypeScript-Specific Pattern Conversions
 
-**Output**: `.migration-plan/mappings/ts-patterns.md`
+**Output**: Contributes to `.migration-plan/mappings/pattern-transforms.md`
 
 ## Purpose
 

@@ -1,6 +1,6 @@
 # 12 - Async Transform Mapping
 
-**Output**: `.migration-plan/mappings/async-strategy.md`
+**Output**: Contributes to `.migration-plan/mappings/async-strategy.md`
 
 ## Purpose
 

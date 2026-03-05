@@ -1,6 +1,6 @@
 # 10 - Ownership Model Mapping
 
-**Output**: `.migration-plan/mappings/ownership-model.md`
+**Output**: Contributes to `.migration-plan/mappings/type-mapping.md` (ownership decisions)
 
 ## Purpose
 

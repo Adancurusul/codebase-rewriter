@@ -1,6 +1,6 @@
 # 60 - Cargo Workspace Setup
 
-**Output**: Cargo workspace files in the target project directory
+**Output**: `{project_root}/Cargo.toml`, `{project_root}/crates/*/Cargo.toml`
 
 ## Purpose
 

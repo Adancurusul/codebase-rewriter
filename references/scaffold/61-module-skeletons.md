@@ -1,6 +1,6 @@
 # 61 - Module Skeletons
 
-**Output**: Rust source files with type definitions and function signatures (no implementations)
+**Output**: `{project_root}/crates/*/src/*.rs` (skeleton source files)
 
 ## Purpose
 
